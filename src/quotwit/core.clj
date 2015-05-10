@@ -1,5 +1,5 @@
 (ns quotwit.core
-  (:use clojure.string)
+  (:use [clojure.string :only [split join]])
   (:import (java.awt Color Font Graphics2D RenderingHints)
            (java.awt.image BufferedImage)
            (javax.imageio ImageIO)
@@ -20,7 +20,6 @@
 
 (defn save [image fname]
   (ImageIO/write image "jpg" (File. fname)))
-
 
 (defn line-split-first [words pred]
   (split-at
@@ -48,7 +47,6 @@
         splitfn #(< (.stringWidth fm (join " " %)) (- width (* padding 2)))
         lines (wrap-lines quote splitfn)
         yoffset (int (/ (- height (* (count lines) lineheight)) 2))]
-    (println yoffset)
     (doseq [index (range (count lines))]
       (.drawString graphics (nth lines index) padding (+ (* index lineheight) yoffset)))))
 
@@ -66,7 +64,10 @@
         graphics (make-graphics image)]
     (write-quote graphics quote width height)
     (write-name-source graphics qname source width height)
+    (println "Writing image to" fname)
     (save image fname)))
 
-(def quotation "I wish I could say that fathers and mothers worry in equal measure. But they don't. Disregard what your two-career couple friends say about going 50-50.")
-(run quotation "Judith Shulevitz" "Sunday Review: \"Mom: The Designated Worrier\"" "output.jpg")
+(defn -main [& args]
+  (if (= (count args) 4)
+    (apply run args)
+    (println "Usage: lein run <quote> <author> <description> <outfname>")))
