@@ -18,9 +18,6 @@
 (defn make-image [width height]
   (BufferedImage. width, height, BufferedImage/TYPE_INT_RGB))
 
-(defn save [image fname]
-  (ImageIO/write image "jpg" (File. fname)))
-
 (defn line-split-first [words pred]
   (split-at
    (loop [index 1]
@@ -65,7 +62,7 @@
     (write-quote graphics quote width height)
     (write-name-source graphics qname source width height)
     (println "Writing image to" fname)
-    (save image fname)))
+    (ImageIO/write image "jpg" (File. fname))))
 
 (defn -main [& args]
   (if (= (count args) 4)

@@ -7,7 +7,7 @@ A Clojure library designed to create quotation cards like the ones the NY Times 
 ## Usage
 First, install [Leiningen](http://leiningen.org/).
 
-Then, in the project folder, run:
+Next, clone this repo, and cd into the project folder.  Then run:
 
 ```shell
 $> lein run "A Quotation" "Author" "Description" filename.jpg
