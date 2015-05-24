@@ -1,9 +1,10 @@
-(ns quotwit.core
+(ns quotwit.cards
   (:use [clojure.string :only [split join]])
   (:import (java.awt Color Font Graphics2D RenderingHints)
            (java.awt.image BufferedImage)
            (javax.imageio ImageIO)
-           (java.io File)))
+           (java.io File ByteArrayInputStream ByteArrayOutputStream FileInputStream)
+           (javax.imageio ImageIO)))
 
 (defn make-graphics [image]
   (let [rh (RenderingHints. RenderingHints/KEY_TEXT_ANTIALIASING, RenderingHints/VALUE_TEXT_ANTIALIAS_GASP)]
@@ -13,6 +14,7 @@
       (.setColor Color/BLACK)
       (.fillRect 0 0 (.getWidth image) (.getHeight image))
       (.setColor (Color. 220 220 220))
+      ;(.setFont (Font/createFont Font/TRUETYPE_FONT (FileInputStream. "/tmp/Tinos-Regular.ttf"))))))
       (.setFont (Font. "Times" Font/PLAIN 55)))))
 
 (defn make-image [width height]
@@ -49,22 +51,31 @@
 
 (defn write-name-source [graphics qname source width height]
   (let [fm (.getFontMetrics graphics)]
-    (.setFont graphics (Font. "Helvetica" Font/BOLD 25))
-    (.drawString graphics (.toUpperCase qname) 50 (int (- height (* 1.5 (.getHeight fm)))))
-    (.setFont graphics (Font. "Helvetica" Font/PLAIN 23))
-    (.drawString graphics source 50 (- height (.getHeight fm)))))
-
-(defn run [quote qname source fname]
+    (doto graphics
+      (.setFont (Font. "Helvetica" Font/BOLD 25))
+      (.drawString (.toUpperCase qname) 50 (int (- height (* 1.5 (.getHeight fm)))))
+      (.setFont (Font. "Helvetica" Font/PLAIN 23))
+      (.drawString source 50 (- height (.getHeight fm))))))
+  
+(defn run [quote qname source]
   (let [image (make-image 999 599)
         width (.getWidth image)
         height (.getHeight image)
         graphics (make-graphics image)]
     (write-quote graphics quote width height)
     (write-name-source graphics qname source width height)
-    (println "Writing image to" fname)
-    (ImageIO/write image "jpg" (File. fname))))
+    image))
 
-(defn -main [& args]
-  (if (= (count args) 4)
-    (apply run args)
-    (println "Usage: lein run <quote> <author> <description> <outfname>")))
+(defn get-image-bytes [quote qname source]
+  (let [image (run quote qname source)]
+    (with-open [bs (ByteArrayOutputStream.)]
+      (ImageIO/write image "jpg" bs)
+      (.flush bs)
+      (ByteArrayInputStream. (.toByteArray bs)))))
+
+(defn get-image-byte-array [quote qname source]
+  (let [image (run quote qname source)]
+    (with-open [bs (ByteArrayOutputStream.)]
+      (ImageIO/write image "jpg" bs)
+      (.flush bs)
+      (.toByteArray bs))))

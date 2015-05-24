@@ -1,0 +1,66 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Quotwit</title>
+    
+    <link rel="stylesheet" href="/public/styles.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script type="text/javascript">
+      function run() {
+      var quote = $("#quote").val(), name = $("#name").val(), source = $("#source").val(), status = $("#status").val();
+      $("#card").attr("src", "/image?quote=" + encodeURIComponent(quote) + "&name=" + encodeURIComponent(name) + "&source=" + encodeURIComponent(source) + "&status=" + encodeURIComponent(status));
+      }
+      $(function() {
+        $(".updatable").keyup(function() { run() });
+      });
+    </script>
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Your Quote</h1>
+        <p>Enter your quote, name, and description below.</p>
+	<p>
+	  <b>Quote:</b><br />
+	  <textarea id="quote" rows="4" cols="34" class="updatable"></textarea>
+	</p>
+
+	<p>
+	  <b>Name:</b><br />
+	  <input type="text" id="name" class="updatable"/>
+	</p>
+
+	<p>
+	  <b>Description:</b><br />
+	  <input type="text" id="source" class="updatable"/>
+	</p>
+
+	<p>
+	  <b>Status:</b><br />
+	  <input type="text" id="status" class="updatable"/>
+	</p>
+
+	<button onclick="run()"><img src="https://twitter.com/favicon.ico" /><span>Post to Twitter</span></button>
+      </header>
+      <section>
+        <h1>Your Quote Card</h1>
+        <p>
+	  <img src="/image" id="card"/>
+	</p>
+      </section>
+      <footer>
+	<!--
+        <p>This project is maintained by <a href="http://github.com/orderedlist">Steve Smith</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+-->
+      </footer>
+    </div>
+    <script src="/public/scale.fix.js"></script>
+  </body>
+</html>
