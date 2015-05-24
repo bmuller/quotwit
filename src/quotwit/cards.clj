@@ -14,8 +14,7 @@
       (.setColor Color/BLACK)
       (.fillRect 0 0 (.getWidth image) (.getHeight image))
       (.setColor (Color. 220 220 220))
-      ;(.setFont (Font/createFont Font/TRUETYPE_FONT (FileInputStream. "/tmp/Tinos-Regular.ttf"))))))
-      (.setFont (Font. "Times" Font/PLAIN 55)))))
+      (.setFont (Font. "Nimbus Roman No9 L Regular" Font/PLAIN 55)))))
 
 (defn make-image [width height]
   (BufferedImage. width, height, BufferedImage/TYPE_INT_RGB))
@@ -52,9 +51,9 @@
 (defn write-name-source [graphics qname source width height]
   (let [fm (.getFontMetrics graphics)]
     (doto graphics
-      (.setFont (Font. "Helvetica" Font/BOLD 25))
+      (.setFont (Font. "Nimbus Sans L Bold" Font/BOLD 25))
       (.drawString (.toUpperCase qname) 50 (int (- height (* 1.5 (.getHeight fm)))))
-      (.setFont (Font. "Helvetica" Font/PLAIN 23))
+      (.setFont (Font. "Nimbus Sans L Regular" Font/PLAIN 23))
       (.drawString source 50 (- height (.getHeight fm))))))
   
 (defn run [quote qname source]

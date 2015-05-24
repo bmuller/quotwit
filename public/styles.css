@@ -1,5 +1,15 @@
 @import url(https://fonts.googleapis.com/css?family=Lato:300italic,700italic,300,700);
 
+footer {
+    text-align: right;
+    padding: 0 2.5% 2.5% 2.5%;
+}
+
+footer a {
+    text-decoration: none;
+    color: #57ad68;
+}
+
 body {
     font:14px/1.5 Lato, "Helvetica Neue", Helvetica, Arial, sans-serif;
     color:#777;
@@ -41,6 +51,7 @@ img {
 }
 
 button {
+    font-size: 1.1em;
     padding: 10px 20px;
     color: #666665;
     background: #fff;
@@ -91,7 +102,7 @@ section p {
     color: #999;
 }
 
-.edit div {
+.edit > div {
     margin-bottom: 45px;
 }
 
