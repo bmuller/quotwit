@@ -51,6 +51,7 @@ img {
 }
 
 button {
+    outline: none;
     font-size: 1.1em;
     padding: 10px 20px;
     color: #666665;
