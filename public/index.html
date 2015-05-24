@@ -24,13 +24,13 @@
     <script type="text/javascript">
 
      function run() {
+	 if ($('.input.invalid').length) return;
 	 var quote = $("#quote").text(), name = $("#name").text(), source = $("#source").text(), status = $("#status").text();
 	 $("#card").attr("src", "/image?quote=" + encodeURIComponent(quote) + "&name=" + encodeURIComponent(name) + "&source=" + encodeURIComponent(source) + "&status=" + encodeURIComponent(status));
      }
 
      function post() {
-       if($("#quote").text().length > 1)
-         window.location = "/app/post";
+	 if($("#quote").text().length > 1) window.location = "/app/post";
      }
 
      $(function() {
@@ -42,11 +42,11 @@
 	     var temp = text;
 	     var isTweet = $(this).attr('id') === 'tweet';
 
-	     var urlRe22 = /(http:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,4}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/ig;
-	     var urlRe23 = /https:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,4}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/ig;
+	     var urlRe22 = new RegExp('(http:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,4}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)', 'ig');
+	     var urlRe23 = new RegExp('https:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,4}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)','ig');
 
-              if (isTweet) {
-		 temp = temp.replace(urlRe23, 'aaaaaaaaaaaaaaaaaaaaaaa');     
+	     if (isTweet) {
+		 temp = temp.replace(urlRe23, 'aaaaaaaaaaaaaaaaaaaaaaa');
 		 temp = temp.replace(urlRe22, 'aaaaaaaaaaaaaaaaaaaaaa');
 	     }
 
@@ -69,8 +69,12 @@
   </head>
   <body>
     <section class="preview">
+      <div id="brand">
+	<h1>Quotwit</h1>
+	<h1>NYT style quote cards for twitter</h1>
+      </div>
       <div id="tweet-preview">
-	<p class="tweet-text" id="status">&nbsp;</p>
+	<p class="tweet-text" id="status"></p>
 	<img src="/image" id="card"/>
       </div>
     </section>    

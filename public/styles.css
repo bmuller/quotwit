@@ -53,12 +53,12 @@ button {
 
 button > img,
 button > span {
-    vertical-align: middle
+    vertical-align: middle;
 }
 
 button:hover {
     border-color: #626262;
-    color: #333332
+    color: #000;
 }
 
 section {
@@ -75,20 +75,26 @@ section {
     position: absolute;
     top: 0;
     right: 0;
-    min-height: 100%;
+    height: 100%;
     width: 30%;
-    background: #f0f0f0;
+    margin-top: 85px;
+}
+
+.edit div {
+    margin-bottom: 45px;
 }
 
 .input {
-    margin-top: 45px;
     position: relative;
+    background: white;
+    color: #333332;
 }
 
 .input label {
     padding: 10px;
     position:absolute;
     z-index:1;
+    color: white;
     pointer-events:none;
     -webkit-transition: -webkit-transform 0.25s, font-size 0.25s;
     transition: transform 0.25s, font-size 0.25s;
@@ -98,6 +104,7 @@ section {
 
 .input.dirty label, 
 .input.focused label {
+    color: #333332;
     display:block;
     font-size: 10px;
     transform: translate3d(0,-3em,0);
@@ -109,6 +116,7 @@ section {
     position: absolute;
     bottom: 5px;
     right: 5px;
+    color: #333332;
 }
 
 .input.invalid .length {
@@ -120,7 +128,8 @@ section {
 }
 
 .input [contenteditable] {
-    background: #fff;
+    background: #000;
+    color: white;
     border: 1px solid transparent;
     min-height: 20px;
     padding: 10px;
@@ -129,21 +138,19 @@ section {
 }
 
 .input.focused [contenteditable] {
-    border-color: #a9d8b2;
-    background: rgba(87,173,104,.1);
-    color: #468c54;
+    border-color: #000;
+    background: #fff;
+    color: #333332;
 }
 
 .input.invalid [contenteditable] {
     border-color: #cc1100;
-    background: rgba(204,17,0,0.1);
+    background: #fff;
     color: #a10;
 }
 
 #tweet-preview {
-    border: 1px solid rgba(0,0,0,0.1);
-    border-radius: 6px;
-    padding: 30px 40px;
+    border-top: 1px solid rgba(0,0,0,0.1);
 }
 
 .tweet-text {
@@ -153,6 +160,25 @@ section {
     line-height: 34px;
     font-weight: 300;
     letter-spacing: .01em;
+    min-height: 34px;
+    margin: 20px 0;
+}
+
+#brand {
+    margin-bottom: 35px;
+}
+
+#brand h1 {
+    color: #000;
+    display: inline-block;
+    padding: 10px;
+    font-weight: 100;
+    margin: 0;
+}
+
+#brand h1:first-child {
+    color: white;
+    background: #000;
 }
 
 @media print, screen and (max-width: 720px) {
