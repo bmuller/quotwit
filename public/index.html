@@ -12,55 +12,85 @@
     <![endif]-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <script type="text/javascript">
-      function run() {
-      var quote = $("#quote").val(), name = $("#name").val(), source = $("#source").val(), status = $("#status").val();
-      $("#card").attr("src", "/image?quote=" + encodeURIComponent(quote) + "&name=" + encodeURIComponent(name) + "&source=" + encodeURIComponent(source) + "&status=" + encodeURIComponent(status));
-      }
-      $(function() {
-        $(".updatable").keyup(function() { run() });
-      });
+
+     function run() {
+	 var quote = $("#quote").text(), name = $("#name").text(), source = $("#source").text(), status = $("#status").text();
+	 $("#card").attr("src", "/image?quote=" + encodeURIComponent(quote) + "&name=" + encodeURIComponent(name) + "&source=" + encodeURIComponent(source) + "&status=" + encodeURIComponent(status));
+     }
+
+     function post() {
+       if($("#quote").text().length > 1)
+         window.location = "/app/post";
+     }
+
+     $(function() {
+         $(".updatable").keyup(function() {
+	     var text = $(this).text();
+
+	     $(this).parent().toggleClass('dirty', !!text);
+
+	     var temp = text;
+	     var isTweet = $(this).attr('id') === 'tweet';
+
+	     var urlRe22 = /(http:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,4}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/ig;
+	     var urlRe23 = /https:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,4}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/ig;
+
+              if (isTweet) {
+		 temp = temp.replace(urlRe23, 'aaaaaaaaaaaaaaaaaaaaaaa');     
+		 temp = temp.replace(urlRe22, 'aaaaaaaaaaaaaaaaaaaaaa');
+	     }
+
+	     var length = temp.length, lengthLeft = $(this).data('length');
+	     $(this).siblings('.length').html(lengthLeft - length);
+	     var invalid = length > $(this).data('length');
+	     $(this).parent().toggleClass('invalid', invalid);
+
+	     if (!invalid) {
+		 run();
+		 if (isTweet) $('#tweet-preview .tweet-text').html(text);
+	     }
+	 }).focus(function() {
+	     $(this).parent().addClass('focused');
+	 }).blur(function() {
+	     $(this).parent().removeClass('focused');
+	 });
+     });
     </script>
   </head>
   <body>
-    <div class="wrapper">
-      <header>
-        <h1>Your Quote</h1>
-        <p>Enter your quote, name, and description below.</p>
-	<p>
-	  <b>Quote:</b><br />
-	  <textarea id="quote" rows="4" cols="34" class="updatable"></textarea>
-	</p>
+    <section class="preview">
+      <div id="tweet-preview">
+	<p class="tweet-text" id="status">&nbsp;</p>
+	<img src="/image" id="card"/>
+      </div>
+    </section>    
+    <section class="edit">
+      <div>Enter your quote, name, and description below.</div>
+      <div class="input">
+	<label>Quote</label>
+	<span class="length"></span>
+	<div contenteditable id="quote" class="updatable" data-length="140"></div>
+      </div>
 
-	<p>
-	  <b>Name:</b><br />
-	  <input type="text" id="name" class="updatable"/>
-	</p>
+      <div class="input">
+	<label>Name</label>
+	<span class="length"></span>	
+	<div contenteditable id="name" class="updatable" data-length="50"></div>
+      </div>
 
-	<p>
-	  <b>Description:</b><br />
-	  <input type="text" id="source" class="updatable"/>
-	</p>
+      <div class="input">
+	<label>Description</label>
+	<span class="length"></span>	
+	<div contenteditable id="source" class="updatable" data-length="50"></div>
+      </div>
 
-	<p>
-	  <b>Status:</b><br />
-	  <input type="text" id="status" class="updatable"/>
-	</p>
+      <div class="input">
+	<label>Tweet</label>
+	<span class="length"></span>	
+	<div contenteditable id="tweet" class="updatable" data-length="140"></div>
+      </div>      
 
-	<button onclick="run()"><img src="https://twitter.com/favicon.ico" /><span>Post to Twitter</span></button>
-      </header>
-      <section>
-        <h1>Your Quote Card</h1>
-        <p>
-	  <img src="/image" id="card"/>
-	</p>
-      </section>
-      <footer>
-	<!--
-        <p>This project is maintained by <a href="http://github.com/orderedlist">Steve Smith</a></p>
-        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
--->
-      </footer>
-    </div>
-    <script src="/public/scale.fix.js"></script>
+      <button onclick="post()"><img src="https://twitter.com/favicon.ico" /><span>Post to Twitter</span></button>
+    </section>
   </body>
 </html>
