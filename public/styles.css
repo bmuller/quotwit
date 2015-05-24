@@ -48,7 +48,6 @@ button {
     border:1px solid #d2d2d2;
     left-padding: 30px;
     cursor: pointer;
-    margin-top: 45px;
 }
 
 button > img,
@@ -67,17 +66,29 @@ section {
     vertical-align: top;
 }
 
+section p {
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-weight: 300;
+    letter-spacing: .01em;
+    min-height: 34px;
+}
+
 .preview {
     width: 59%;
 }
 
+.preview p {
+    font-size: 28px;
+    color: #292f33;
+    line-height: 34px;
+}
+
 .edit {
-    position: absolute;
-    top: 0;
-    right: 0;
-    height: 100%;
     width: 30%;
-    margin-top: 85px;
+}
+
+.edit p {
+    color: #999;
 }
 
 .edit div {
@@ -149,23 +160,10 @@ section {
     color: #a10;
 }
 
-#tweet-preview {
-    border-top: 1px solid rgba(0,0,0,0.1);
-}
-
-.tweet-text {
-    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
-    color: #292f33;
-    font-size: 28px;
-    line-height: 34px;
-    font-weight: 300;
-    letter-spacing: .01em;
-    min-height: 34px;
-    margin: 20px 0;
-}
-
 #brand {
-    margin-bottom: 35px;
+    margin: 0 2.5%;
+    padding: 2.5% 0;
+    border-bottom: 1px solid rgba(0,0,0,0.1);
 }
 
 #brand h1 {
@@ -181,7 +179,7 @@ section {
     background: #000;
 }
 
-@media print, screen and (max-width: 720px) {
+@media print, screen and (max-width: 767px) {
     body {
 	word-wrap:break-word;
     }
